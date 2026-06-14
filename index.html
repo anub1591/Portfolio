@@ -678,13 +678,18 @@ async function sendChat() {
       body: JSON.stringify({ system: SYSTEM, messages: chatHistory })
     });
     const data = await res.json();
-    const reply = data.content?.map(b => b.text || '').join('') || 'Sorry, something went wrong. Please email anub.ras01@gmail.com directly.';
+    let reply = 'Sorry, I could not get a response. Please email anub.ras01@gmail.com directly.';
+    if (data && data.content && Array.isArray(data.content) && data.content.length > 0) {
+      reply = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    } else if (data && data.error) {
+      reply = 'API Error: ' + (data.error.message || JSON.stringify(data.error));
+    }
     removeTyping();
     addMsg('bot', reply);
     chatHistory.push({ role: 'assistant', content: reply });
   } catch(e) {
     removeTyping();
-    addMsg('bot', 'Something went wrong. Please reach out directly at anub.ras01@gmail.com');
+    addMsg('bot', 'Network error: ' + e.message);
   }
   btn.disabled = false;
   input.focus();
