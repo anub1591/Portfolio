@@ -675,7 +675,7 @@ async function sendChat() {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1000, system: SYSTEM, messages: chatHistory })
+      body: JSON.stringify({ system: SYSTEM, messages: chatHistory })
     });
     const data = await res.json();
     const reply = data.content?.map(b => b.text || '').join('') || 'Sorry, something went wrong. Please email anub.ras01@gmail.com directly.';
