@@ -649,24 +649,24 @@ footer span { color: var(--blue); }
 
 <div class="tableau-card" onclick="openTableauModal(0)">
 <div class="tableau-thumb">
-📊
+<img src="https://public.tableau.com/static/images/KX/KX4ST9825/1.png" alt="Analysis of Global TB Burden Estimates" loading="lazy">
 <div class="tableau-thumb-overlay">Click to Preview →</div>
 </div>
 <div class="tableau-body">
-<div class="tableau-title">Dashboard One</div>
-<div class="tableau-desc">Public Tableau dashboard — click to view live on Tableau Public.</div>
+<div class="tableau-title">Analysis of Global TB Burden Estimates</div>
+<div class="tableau-desc">Interactive analysis of global tuberculosis burden data across regions.</div>
 <span class="tableau-year">2019</span>
 </div>
 </div>
 
 <div class="tableau-card" onclick="openTableauModal(1)">
 <div class="tableau-thumb">
-📈
+<img src="https://public.tableau.com/static/images/S6/S6MKWDW2R/1.png" alt="Analysis of Scratch Website Projects" loading="lazy">
 <div class="tableau-thumb-overlay">Click to Preview →</div>
 </div>
 <div class="tableau-body">
-<div class="tableau-title">Dashboard Two</div>
-<div class="tableau-desc">Public Tableau dashboard — click to view live on Tableau Public.</div>
+<div class="tableau-title">Analysis of Scratch Website Projects</div>
+<div class="tableau-desc">Visualization exploring trends across Scratch (MIT) coding projects.</div>
 <span class="tableau-year">2019</span>
 </div>
 </div>
@@ -1027,15 +1027,17 @@ audio.play();
 // TABLEAU MODAL LOGIC
 const tableauDashboards = [
   {
-    title: "Dashboard One",
-    desc: "Published on Tableau Public in 2019. Click below to explore the live, interactive version.",
-    embedUrl: "https://public.tableau.com/views/YOUR_DASHBOARD_1_PATH/Sheet1?:embed=y&:showVizHome=no",
+    title: "Analysis of Global TB Burden Estimates",
+    desc: "Published on Tableau Public in 2019. An interactive analysis of global tuberculosis burden data — visualizing trends and patterns across regions.",
+    embedUrl: "https://public.tableau.com/views/shared/KX4ST9825?:embed=y&:showVizHome=no",
+    thumb: "https://public.tableau.com/static/images/KX/KX4ST9825/1.png",
     link: "https://public.tableau.com/profile/anub.rastogi"
   },
   {
-    title: "Dashboard Two",
-    desc: "Published on Tableau Public in 2019. Click below to explore the live, interactive version.",
-    embedUrl: "https://public.tableau.com/views/YOUR_DASHBOARD_2_PATH/Sheet1?:embed=y&:showVizHome=no",
+    title: "Analysis of Scratch Website Projects",
+    desc: "Published on Tableau Public in 2019. A data visualization exploring trends across Scratch (MIT) website coding projects.",
+    embedUrl: "https://public.tableau.com/views/shared/S6MKWDW2R?:embed=y&:showVizHome=no",
+    thumb: "https://public.tableau.com/static/images/S6/S6MKWDW2R/1.png",
     link: "https://public.tableau.com/profile/anub.rastogi"
   }
 ];
