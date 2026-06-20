@@ -178,10 +178,16 @@ section { padding: 5rem 2rem; max-width:1100px; margin:0 auto; }
 .modal-close { position:absolute; top:1rem; right:1rem; width:36px; height:36px; border-radius:50%; background: var(--navy-3); border:1px solid var(--border); color: var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; z-index:10; transition: all 0.2s; }
 .modal-close:hover { background: var(--blue-glow); border-color: var(--blue-border); }
 .modal-body { padding:2rem; }
-.modal-title { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
+.modal-fit-btn { display:inline-flex; align-items:center; gap:0.4rem; background: var(--navy-3); border:1px solid var(--border); color: var(--text-muted); font-size:0.8rem; padding:0.4rem 0.9rem; border-radius:8px; cursor:pointer; margin-left:0.75rem; transition: all 0.2s; }
+.modal-fit-btn:hover { border-color: var(--blue-border); color: var(--blue-light); background: var(--blue-glow); }
+.modal-title-row { display:flex; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem; }
+.modal-title { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; margin:0; }
 .modal-desc { color: var(--text-muted); margin-bottom:1.5rem; }
-.modal-embed { width:100%; display:flex; justify-content:center; align-items:flex-start; border-radius:10px; overflow:visible; background: var(--navy-3); border:1px solid var(--border); padding:1rem; box-sizing:border-box; }
+.modal-embed { width:100%; display:flex; justify-content:flex-start; align-items:flex-start; border-radius:10px; overflow-x:auto; overflow-y:visible; background: var(--navy-3); border:1px solid var(--border); padding:1rem; box-sizing:border-box; }
 .modal-embed iframe { width:100%; height:100%; border:none; }
+.modal-embed::-webkit-scrollbar { height:8px; }
+.modal-embed::-webkit-scrollbar-track { background:transparent; }
+.modal-embed::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius:4px; }
 .modal-link { display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.25rem; background: var(--blue); color:#fff; padding:0.7rem 1.5rem; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.9rem; }
 
 .podcast-section { background: var(--navy-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:5rem 2rem; }
@@ -690,7 +696,10 @@ footer span { color: var(--blue); }
 <div class="modal-box">
 <div class="modal-close" onclick="closeTableauModal()">✕</div>
 <div class="modal-body">
+<div class="modal-title-row">
 <div class="modal-title" id="modalTitle">Dashboard Title</div>
+<button class="modal-fit-btn" id="modalFitBtn" onclick="fitTableauToWindow()">⤢ Fit to window</button>
+</div>
 <p class="modal-desc" id="modalDesc">Dashboard description goes here.</p>
 <div class="modal-embed" id="modalEmbed"></div>
 <a href="https://public.tableau.com/profile/anub.rastogi" target="_blank" class="modal-link" id="modalLink">View Full Dashboard on Tableau Public →</a>
@@ -1042,20 +1051,19 @@ const tableauDashboards = [
   }
 ];
 
-function openTableauModal(index) {
-  const d = tableauDashboards[index];
-  document.getElementById('modalTitle').textContent = d.title;
-  document.getElementById('modalDesc').textContent = d.desc;
-  document.getElementById('modalLink').href = d.link;
+let currentVizAspect = 991/1016;
+let currentVizId = null;
+let currentVizPath = null;
+
+function renderTableauViz(path, width, height) {
   const vizId = 'tableauViz' + Date.now();
-  const embedWidth = Math.min(window.innerWidth - 120, 860);
-  const embedHeight = Math.round(embedWidth * (991/1016));
+  currentVizId = vizId;
   document.getElementById('modalEmbed').innerHTML =
     '<div class="tableauPlaceholder" id="' + vizId + '" style="position:relative;">' +
-    '<object class="tableauViz" style="width:' + embedWidth + 'px;height:' + embedHeight + 'px;">' +
+    '<object class="tableauViz" style="width:' + width + 'px;height:' + height + 'px;">' +
     '<param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />' +
     '<param name="embed_code_version" value="3" />' +
-    '<param name="path" value="' + d.path + '" />' +
+    '<param name="path" value="' + path + '" />' +
     '<param name="toolbar" value="yes" />' +
     '<param name="animate_transition" value="yes" />' +
     '<param name="display_static_image" value="yes" />' +
@@ -1067,12 +1075,36 @@ function openTableauModal(index) {
   const script = document.createElement('script');
   script.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
   document.getElementById('modalEmbed').appendChild(script);
+}
+
+function openTableauModal(index) {
+  const d = tableauDashboards[index];
+  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalDesc').textContent = d.desc;
+  document.getElementById('modalLink').href = d.link;
+  currentVizAspect = 991/1016;
+  currentVizPath = d.path;
   document.getElementById('tableauModal').classList.add('active');
+  setTimeout(() => {
+    const container = document.getElementById('modalEmbed');
+    const availableWidth = container.clientWidth - 32;
+    const fitHeight = Math.round(availableWidth * currentVizAspect);
+    renderTableauViz(d.path, availableWidth, fitHeight);
+  }, 10);
+}
+
+function fitTableauToWindow() {
+  if (!currentVizPath) return;
+  const container = document.getElementById('modalEmbed');
+  const availableWidth = container.clientWidth - 32;
+  const fitHeight = Math.round(availableWidth * currentVizAspect);
+  renderTableauViz(currentVizPath, availableWidth, fitHeight);
 }
 
 function closeTableauModal() {
   document.getElementById('tableauModal').classList.remove('active');
   document.getElementById('modalEmbed').innerHTML = '';
+  currentVizPath = null;
 }
 
 // SCROLL REVEAL ANIMATIONS
