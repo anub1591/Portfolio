@@ -180,9 +180,8 @@ section { padding: 5rem 2rem; max-width:1100px; margin:0 auto; }
 .modal-body { padding:2rem; }
 .modal-title { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem; }
 .modal-desc { color: var(--text-muted); margin-bottom:1.5rem; }
-.modal-embed { width:100%; min-height:600px; border-radius:10px; overflow:hidden; background: var(--navy-3); border:1px solid var(--border); }
+.modal-embed { width:100%; display:flex; justify-content:center; align-items:flex-start; border-radius:10px; overflow:visible; background: var(--navy-3); border:1px solid var(--border); padding:1rem; box-sizing:border-box; }
 .modal-embed iframe { width:100%; height:100%; border:none; }
-.modal-embed .tableauPlaceholder { min-height:600px; }
 .modal-link { display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.25rem; background: var(--blue); color:#fff; padding:0.7rem 1.5rem; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.9rem; }
 
 .podcast-section { background: var(--navy-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:5rem 2rem; }
@@ -1049,9 +1048,11 @@ function openTableauModal(index) {
   document.getElementById('modalDesc').textContent = d.desc;
   document.getElementById('modalLink').href = d.link;
   const vizId = 'tableauViz' + Date.now();
+  const embedWidth = Math.min(window.innerWidth - 120, 860);
+  const embedHeight = Math.round(embedWidth * (991/1016));
   document.getElementById('modalEmbed').innerHTML =
-    '<div class="tableauPlaceholder" id="' + vizId + '" style="position:relative;width:100%;height:100%;">' +
-    '<object class="tableauViz" style="display:none;width:100%;height:100%;">' +
+    '<div class="tableauPlaceholder" id="' + vizId + '" style="position:relative;">' +
+    '<object class="tableauViz" style="width:' + embedWidth + 'px;height:' + embedHeight + 'px;">' +
     '<param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />' +
     '<param name="embed_code_version" value="3" />' +
     '<param name="path" value="' + d.path + '" />' +
