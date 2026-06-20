@@ -1085,12 +1085,17 @@ function openTableauModal(index) {
   currentVizAspect = 991/1016;
   currentVizPath = d.path;
   document.getElementById('tableauModal').classList.add('active');
-  setTimeout(() => {
-    const container = document.getElementById('modalEmbed');
-    const availableWidth = container.clientWidth - 32;
-    const fitHeight = Math.round(availableWidth * currentVizAspect);
-    renderTableauViz(d.path, availableWidth, fitHeight);
-  }, 10);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const container = document.getElementById('modalEmbed');
+      let availableWidth = container.clientWidth - 32;
+      if (!availableWidth || availableWidth < 100) {
+        availableWidth = Math.min(window.innerWidth - 120, 860);
+      }
+      const fitHeight = Math.round(availableWidth * currentVizAspect);
+      renderTableauViz(d.path, availableWidth, fitHeight);
+    });
+  });
 }
 
 function fitTableauToWindow() {
