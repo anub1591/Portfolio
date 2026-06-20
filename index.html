@@ -174,14 +174,14 @@ section { padding: 5rem 2rem; max-width:1100px; margin:0 auto; }
 /* MODAL/LIGHTBOX - NEW */
 .modal-overlay { position:fixed; inset:0; background: rgba(5,8,16,0.85); backdrop-filter: blur(6px); z-index:1000; display:none; align-items:center; justify-content:center; padding:2rem; }
 .modal-overlay.active { display:flex; }
-.modal-box { background: var(--navy-2); border:1px solid var(--blue-border); border-radius:16px; max-width:1060px; width:96%; max-height:90vh; overflow-y:auto; position:relative; }
+.modal-box { background: var(--navy-2); border:1px solid var(--blue-border); border-radius:16px; max-width:1100px; width:98%; max-height:90vh; overflow-x:hidden; overflow-y:auto; position:relative; }
 .modal-close { position:absolute; top:1rem; right:1rem; width:36px; height:36px; border-radius:50%; background: var(--navy-3); border:1px solid var(--border); color: var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.1rem; z-index:10; transition: all 0.2s; }
 .modal-close:hover { background: var(--blue-glow); border-color: var(--blue-border); }
-.modal-body { padding:2rem; }
+.modal-body { padding:2rem 0.5rem; }
 .modal-title-row { display:flex; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem; }
 .modal-title { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; margin:0; }
 .modal-desc { color: var(--text-muted); margin-bottom:1.5rem; }
-.modal-embed { width:100%; display:flex; justify-content:center; align-items:flex-start; border-radius:10px; overflow-x:auto; overflow-y:visible; background: var(--navy-3); border:1px solid var(--border); padding:1rem; box-sizing:border-box; }
+.modal-embed { width:100%; display:flex; justify-content:center; align-items:flex-start; border-radius:10px; overflow-x:auto; overflow-y:visible; background: var(--navy-3); border:1px solid var(--border); padding:0.5rem; box-sizing:border-box; }
 .modal-embed iframe { width:100%; height:100%; border:none; }
 .modal-embed::-webkit-scrollbar { height:8px; }
 .modal-embed::-webkit-scrollbar-track { background:transparent; }
@@ -1082,19 +1082,7 @@ function openTableauModal(index) {
   currentVizAspect = 991/1016;
   currentVizPath = d.path;
   document.getElementById('tableauModal').classList.add('active');
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const container = document.getElementById('modalEmbed');
-      let availableWidth = container.clientWidth - 32;
-      if (!availableWidth || availableWidth < 100) {
-        availableWidth = Math.min(window.innerWidth - 120, 1016);
-      }
-      const nativeWidth = 1016;
-      const renderWidth = Math.min(availableWidth, nativeWidth);
-      const fitHeight = Math.round(renderWidth * currentVizAspect);
-      renderTableauViz(d.path, renderWidth, fitHeight);
-    });
-  });
+  renderTableauViz(d.path, 1016, 991);
 }
 
 function closeTableauModal() {
