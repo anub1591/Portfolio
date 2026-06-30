@@ -188,6 +188,30 @@ section { padding: 5rem 2rem; max-width:1100px; margin:0 auto; }
 .modal-embed::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius:4px; }
 .modal-link { display:inline-flex; align-items:center; gap:0.5rem; margin-top:1.25rem; background: var(--blue); color:#fff; padding:0.7rem 1.5rem; border-radius:10px; text-decoration:none; font-weight:600; font-size:0.9rem; }
 
+/* AGENT SECTION - NEW */
+.agent-section { padding:5rem 2rem; max-width:1100px; margin:0 auto; }
+.agent-header { margin-bottom:2.5rem; }
+.agent-ai-badge { display:inline-flex; align-items:center; gap:0.4rem; color: var(--text-dim); font-size:0.7rem; font-weight:500; margin-bottom:0.85rem; letter-spacing:0.03em; }
+.agent-ai-badge::before { content:''; width:5px; height:5px; background: var(--blue); border-radius:50%; animation: pulse 2s infinite; flex-shrink:0; }
+.agent-big-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,3.5vw,2.75rem); font-weight:700; letter-spacing:-0.5px; margin-bottom:0.75rem; }
+.agent-layout { display:grid; grid-template-columns: 1fr 1.4fr; gap:2rem; align-items:start; }
+.agent-metrics-card { background: var(--card); border:1px solid var(--border); border-radius:12px; padding:1.5rem; }
+.agent-metric-row { display:flex; justify-content:space-between; align-items:baseline; padding:0.85rem 0; border-bottom:1px solid var(--border); }
+.agent-metric-row:last-child { border-bottom:none; }
+.agent-metric-label { font-size:0.85rem; color: var(--text-muted); }
+.agent-metric-value { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; color: var(--blue-light); }
+.agent-metric-note { font-size:0.75rem; color: var(--text-dim); margin-top:1rem; padding-top:1rem; border-top:1px solid var(--border); }
+.agent-preview { background: var(--card); border:1px solid var(--border); border-radius:12px; padding:1.75rem; }
+.agent-preview-header { display:flex; gap:1rem; align-items:flex-start; margin-bottom:1.25rem; }
+.agent-preview-icon { font-size:2rem; flex-shrink:0; margin-top:2px; }
+.agent-preview-title { font-size:1rem; font-weight:700; color: var(--text); margin:0 0 4px; }
+.agent-preview-desc { font-size:0.82rem; color: var(--text-muted); line-height:1.5; }
+.agent-reasoning-sample { background: var(--navy-3); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; font-size:0.82rem; line-height:1.6; color: var(--text-muted); margin-bottom:1.25rem; }
+.agent-reasoning-sample strong { color: var(--blue-light); }
+.agent-feature { display:flex; align-items:center; gap:0.75rem; color: var(--text-muted); font-size:0.88rem; margin-bottom:0.6rem; }
+.agent-feature::before { content:'✓'; color: var(--blue); font-weight:700; flex-shrink:0; }
+.agent-actions { display:flex; gap:0.75rem; margin-top:1.5rem; flex-wrap:wrap; }
+
 .podcast-section { background: var(--navy-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:5rem 2rem; }
 .podcast-inner { max-width:1100px; margin:0 auto; }
 .podcast-header { margin-bottom: 2.5rem; }
@@ -243,6 +267,7 @@ footer span { color: var(--blue); }
 .avatar-wrap { width:180px; height:180px; font-size:3.5rem; }
 .chatbot-inner { grid-template-columns:1fr; }
 .podcast-layout { grid-template-columns:1fr; }
+.agent-layout { grid-template-columns:1fr; }
 .nav-links { display:none; }
 }
 </style>
@@ -257,6 +282,7 @@ footer span { color: var(--blue); }
 <li><a href="#education">Education</a></li>
 <li><a href="#projects">Projects</a></li>
 <li><a href="#dashboards">Dashboards</a></li>
+<li><a href="#agent">AI Agent</a></li>
 <li><a href="#podcast">Podcast</a></li>
 <li><a href="#chatbot">AI Assistant</a></li>
 </ul>
@@ -570,22 +596,6 @@ footer span { color: var(--blue); }
 <div class="projects-grid">
 
 <div class="project-card">
-<div class="project-icon">⚡</div>
-<div class="project-title">AI Pipeline Monitor Agent</div>
-<div class="project-desc">An autonomous AI agent — not just a chatbot — that investigates smart meter electricity data using real tool-use/function-calling, reasons step-by-step about anomalies, and validates its findings against labeled ground truth (72% accuracy, 74% precision on 150 test readings).</div>
-<div class="project-stack">
-<span class="stack-tag">Claude API (Tool Use)</span>
-<span class="stack-tag">Python</span>
-<span class="stack-tag">Streamlit</span>
-<span class="stack-tag">pandas</span>
-</div>
-<div style="display:flex; gap:0.6rem; margin-top:1rem;">
-<a href="https://smart-meter-agent.streamlit.app" target="_blank" class="btn-primary" style="padding:0.5rem 1rem; font-size:0.8rem;">View Live Demo</a>
-<a href="https://github.com/anub1591/smart-meter-anomaly-agent" target="_blank" class="btn-secondary" style="padding:0.5rem 1rem; font-size:0.8rem;">GitHub Repo</a>
-</div>
-</div>
-
-<div class="project-card">
 <div class="project-icon">🤖</div>
 <div class="project-title">AI Resume Chatbot</div>
 <div class="project-desc">An intelligent assistant trained on my professional background — recruiters can ask natural language questions and get instant answers about my experience and skills.</div>
@@ -721,6 +731,60 @@ footer span { color: var(--blue); }
 </div>
 
 <div class="divider"></div>
+
+<section class="agent-section reveal" id="agent">
+<div class="agent-header">
+<div class="agent-ai-badge">Built with Claude API — Tool Use</div>
+<div class="agent-big-title">⚡ AI Pipeline Monitor <span style="color:var(--blue-light);">Agent</span></div>
+<p class="section-desc" style="margin-bottom:0;">A genuine agentic AI demo — not a chatbot. The agent autonomously investigates a smart meter electricity dataset, reasons step-by-step about likely causes, and validates its own findings against labeled ground truth.</p>
+</div>
+
+<div class="agent-layout">
+
+<div class="agent-metrics-card">
+<div class="agent-metric-row">
+<span class="agent-metric-label">Precision</span>
+<span class="agent-metric-value">74%</span>
+</div>
+<div class="agent-metric-row">
+<span class="agent-metric-label">Recall</span>
+<span class="agent-metric-value">68%</span>
+</div>
+<div class="agent-metric-row">
+<span class="agent-metric-label">Overall Accuracy</span>
+<span class="agent-metric-value">72%</span>
+</div>
+<div class="agent-metric-note">Validated against 150 labeled readings from the Kaggle Smart Meter Electricity Consumption dataset — real ground-truth comparison, not a self-reported number.</div>
+</div>
+
+<div class="agent-preview">
+<div class="agent-preview-header">
+<div class="agent-preview-icon">🧠</div>
+<div>
+<h3 class="agent-preview-title">Watch the agent think, not just answer</h3>
+<span class="agent-preview-desc">Every run shows the full reasoning chain — what it checked, why, and what it concluded.</span>
+</div>
+</div>
+
+<div class="agent-reasoning-sample">
+<strong>🧠 Reasoning:</strong> Consumption is 0.0 kWh against a historical average of 6.07 kWh — a complete zero in normal weather conditions (19.9°C). This is a strong malfunction signal.<br><br>
+<strong>🔧 Calling tool:</strong> check_weather_correlation(row_index=74)<br><br>
+<strong>📊 Result:</strong> 100% below similar-weather average — no meteorological explanation. Flagging as Abnormal.
+</div>
+
+<div class="agent-feature">Real tool-use / function-calling, not a scripted demo</div>
+<div class="agent-feature">Visible multi-step reasoning before any conclusion</div>
+<div class="agent-feature">Self-validated against labeled anomaly data</div>
+<div class="agent-feature">Built on the same kind of energy data I work with at SCE</div>
+
+<div class="agent-actions">
+<a href="https://smart-meter-agent.streamlit.app" target="_blank" class="btn-primary">View Live Demo →</a>
+<a href="https://github.com/anub1591/smart-meter-anomaly-agent" target="_blank" class="btn-secondary">View Code on GitHub</a>
+</div>
+</div>
+
+</div>
+</section>
 
 <div class="podcast-section reveal" id="podcast">
 <div class="podcast-inner">
